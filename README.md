@@ -1,4 +1,4 @@
-# Ajax Hero
+# Ajax Hero (Modular Programming with Brunch)
 
 Please refer to the [original exercise](https://github.com/gSchool/wd-ajax-hero) for additional context.
 
@@ -131,7 +131,7 @@ You can deploy the contents of the build directory (`public/*`) to a web server 
 
 Coming Soon
 
-# Modular Code Design
+## Modular Code Design
 
 As discussed in the breakout session, there are generally 4 key concerns in front-end web development:
 - Remote Data Access & Transformation
@@ -150,3 +150,52 @@ In this project, we're using the following separation of concerns:
 | `app/pages/IndexPage` | The primary controller of the application, responsible for _coordinating_ between user interaction, remote data access, and local state management. |
 | `app/services/MovieService` | A service I've defined to handle all interaction with the remote movie API. The service's interface offers two capabilities: searching for movies given a search term (MovieService.search) and getting a specific movie by ID (MovieService.getById). Notice that the interface of the service does not expose implementation details. In other words, the users of MovieService have no idea it's using the Open Movie Database. In the future, we could choose to reimplement the service to use a different API (e.g., Netflix, IMDB, etc.). |
 | `app/renderers/*` | These are pure JavaScript function that take input and return HTML, which can then be converted into DOM elements that are attached to the appropriate mount points using jQuery's `.html()` utility. |
+
+## Modular Programming Notes
+
+### What is modular programming (a.k.a. modularization) in the context of software development?
+
+Modular programming is a technique to divide a software program (or application or system) into smaller, discrete, independent modules (or sub-programs), each of which is responsible for a specific aspect of functionality.
+
+Commonly, modules are composed of other modules, creating dependencies between modules. That said, in practice, you want to limit the number of dependencies any one module has on other modules.
+
+A module’s interface defines/expresses its capabilities (i.e., it's API) and is the contract between the module itself and its user.
+
+### Types of modularization
+
+Generally speaking, there are two types of modularization:
+- Logical: this happens in your code and is part of the language. _e.g., Functions, Classes (OOP)_
+- Physical: this is about organizing your source code files.
+  - In a front-end web application (which runs in the browser runtime), you can split up your code into multiple JS files each of which is included by separate scripts tags (`<script>`) in your HTML.
+  - In a Node application (which runs within the `node` runtime), you can split up your code into "modules" and import them using the `require` function (e.g., `request(‘request’)`). Node has a built-in module systems based on the Common JS module format.
+
+### What are some of the benefits of modular programming?
+
+- Breaks down complexity (divide and conquer)
+- Clear separation of concerns (SoC)
+- Single responsibility per module
+- Facilitates changes
+- Promotes programming to interfaces
+  - Black box - Don’t care about the implementation details
+- Easier to read and understand
+- Easier to test
+- Easier to reuse
+- Easier to maintain
+- More efficient team development (work can be dividing around modules)
+
+### How do you modularize front-end web applications?
+- There is no single / standard way of doing it
+- Based on years of experience and seeing commonly used patterns
+- Often times, the frameworks you use (e.g., Backbone, React, Angular) and the communities around those frameworks (who establish conventions and best practices) influence or impose a particular way of modularizing your code
+  - This is nice because you don't have to think about it as much.
+  - This can be problematic whenever you're building something that doesn't align well with the established conventions and best practices.
+
+Generally speaking, a front-end web application has these concerns. Please refer to the [previous section](#Modular Programming Notes).
+
+### Module Bundlers
+
+Module Bundlers (a type of front-end build tools), allow you to use Node-style Common JS module format within the browser, instead of having to include dozens of `<script>` tags.
+
+[Webpack](https://webpack.js.org/) is the de facto standard of module bundlers and, at the time of this writing, the most popularly used module bundler. However, it's quite complex and has a steep learning curve.
+
+[Brunch](http://brunch.io) is a much simpler module bundler for beginners.
